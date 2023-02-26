@@ -14,7 +14,14 @@ async function create(req, res) {
 async function index(req, res) {
   try {
     console.log("INDEX", req.body)
-    const meals = await Meal.findAll()
+    const meals = await Meal.findAll({
+      where: {
+        profileId: req.user.profile.id
+      },
+      order: [
+        ['id', 'DESC']
+      ]
+    })
     res.status(200).json(meals)
   } catch (error) {
     console.log(error)
