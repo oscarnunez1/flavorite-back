@@ -17,7 +17,15 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     photo: DataTypes.STRING,
-    profileId: DataTypes.INTEGER
+    profileId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Profiles',
+        key: 'id',
+      }
+    }
   }, {
     sequelize,
     modelName: 'Meal',
