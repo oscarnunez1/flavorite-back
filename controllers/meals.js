@@ -42,12 +42,13 @@ async function update(req, res) {
 
 async function deleteMeal(req, res) {
   try {
-    console.log("DELETED MEAL". req.body)
+    console.log("DELETED MEAL", req.body)
     const deletedMeal = await Meal.destroy(
       { where: { id: req.params.id } }
     )
     res.status(200).json(deletedMeal)
   } catch (error) {
+    console.log("MEAL NOT DELETED", error)
     res.status(500).json(error)
   }
 }
