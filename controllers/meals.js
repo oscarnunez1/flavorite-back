@@ -28,27 +28,26 @@ async function index(req, res) {
 
 async function update(req, res) {
   try {
-    console.log("UPDATE", req.body);
-    const meal = await Meal.update(
-      req.body,
-      { where: { id: req.params.id }, returning: true }
-    )
+    const meal = await Meal.findByPk(req.params.id)
+    meal.set(req.body)
+    await meal.save()
+
     res.status(200).json(meal)
   } catch (error) {
-    console.log(error)
     res.status(500).json(error)
   }
 }
 
 async function deleteMeal(req, res) {
   try {
-    console.log("DELETED MEAL", req.body)
     const deletedMeal = await Meal.destroy(
       { where: { id: req.params.id } }
     )
+    const cat = await Cat.findByPk(req.params.id)
+    cat.set(req.body)
+    await cat.save()
     res.status(200).json(deletedMeal)
   } catch (error) {
-    console.log("MEAL NOT DELETED", error)
     res.status(500).json(error)
   }
 }
