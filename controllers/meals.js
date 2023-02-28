@@ -13,12 +13,14 @@ async function create(req, res) {
 
 async function index(req, res) {
   try {
-    console.log("INDEX", req.body)
     const meals = await Meal.findAll({
       include: [
         {
           model: Profile, as: 'profile' 
         }
+      ],
+      order: [
+        ['id', 'DESC']
       ]
     })
     res.status(200).json(meals)
