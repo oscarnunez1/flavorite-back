@@ -38,21 +38,15 @@ async function update(req, res) {
   }
 }
 
-async function deleteMeal(req, res) {
+const deleteMeal = async (req, res) => {
   try {
-    const deletedMeal = await Meal.destroy(
-      { where: { id: req.params.id } }
-    )
-    const cat = await Cat.findByPk(req.params.id)
-    cat.set(req.body)
-    await cat.save()
-    res.status(200).json(deletedMeal)
+    const meal = await Meal.findByPk(req.params.id)
+    await meal.destroy()
+    res.status(200).json(meal)
   } catch (error) {
     res.status(500).json(error)
   }
 }
-
-
 
 module.exports = {
   create,
