@@ -1,4 +1,4 @@
-const { Meal } = require('../models')
+const { Meal, Profile } = require('../models')
 
 async function create(req, res) {
   try {
@@ -15,8 +15,10 @@ async function index(req, res) {
   try {
     console.log("INDEX", req.body)
     const meals = await Meal.findAll({
-      order: [
-        ['id', 'DESC']
+      include: [
+        {
+          model: Profile, as: 'profile' 
+        }
       ]
     })
     res.status(200).json(meals)
